@@ -326,7 +326,22 @@ int main(){
         player2Hand = dealCard(player2Hand, deck);
         deck.currentCard++;
 
-        if ()
+        // Check for Player 2 Blackjack
+        if (eval(player2Hand) == 21) {
+          cout << "BLACKJACK";
+        }
+        else {
+          player3Hand = dealCard(player3Hand, deck);
+          deck.currentCard++;
+
+          if (eval(player3Hand) == 21) {
+            cout << "BLACKJACK!";
+          }
+          else {
+            dealerHand = dealCard(dealerHand, deck);
+            deck.currentCard++;
+          }
+        }
       }
     }
 
