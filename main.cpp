@@ -206,7 +206,7 @@ int main(){
 	const int NUMCARDS =52;
 	const int CARDSIZE = 2;
 	int playernum;
-	cout << "How many players? (1,2,3)" << endl;
+	cout << "How many players? [1,2,3]" << endl;
 	cin >> playernum;
 
   int player1Wins = 0;
@@ -219,9 +219,10 @@ int main(){
   int player3Pushes = 0;
   
 	while(true){
-    bool player1Blj = false;
-    bool player2Blj = false;
-    bool player3Blj = false;
+        bool player1Blj = false;
+        bool player2Blj = false;
+        bool player3Blj = false;
+        bool dealerBlj = false;
 		Deck deck;
 		// There are zero cards when you declare a new Hand.
 		// Hand dealerHand, player1Hand;
@@ -243,306 +244,230 @@ int main(){
 		cout << endl;
 
 		// printDeck(deck); // DEBUG: deck validation.
-    deck = shuffle(deck, NUMCARDS);
+        deck = shuffle(deck, NUMCARDS);   
 
-    // ==== DEAL HANDS ====
+		// The player gets dealt the first card.
+		player1Hand = dealCard(player1Hand, deck);
+		// increment the position (how many cards deep in the deck)
+		deck.currentCard++;
 
-    /*
-    - Noteworthy Items - 
-    Player 1 will always be dealt a full hand
-    Conditionals must be nested within each other because if the first condition is met the game ends
-    and we must break the loop
-    */
-    
-    // If there is only 1 player and the dealer
-    if (playernum == 1) {
-  		player1Hand = dealCard(player1Hand, deck);
-  		deck.currentCard++;
+		player2Hand = dealCard(player2Hand, deck);
+		deck.currentCard++;
 
-      dealerHand = dealCard(dealerHand, deck);
-      deck.currentCard++;
+		player3Hand = dealCard(player3Hand, deck);
+		deck.currentCard++;
 
-      player1Hand = dealCard(player1Hand, deck);
-  		deck.currentCard++;
+		dealerHand = dealCard(dealerHand, deck);
+		// increment the position (how many cards deep in the deck)
+		deck.currentCard++;
 
-      // Check for blackjack
-      if (eval(player1Hand) == 21) {
-        cout << "BLACKJACK!";
-      }
-      else {
-        dealerHand = dealCard(dealerHand, deck);
-        deck.currentCard++;
-        
-        // Check for Dealer Blackjack
-        if (eval(dealerHand) == 21) {
-          cout << "BLACKJACK!";
-        }
-      }
-    }
-    // If there are only 2 players and the dealer
-    else if (playernum == 2)
-    {
-      player1Hand = dealCard(player1Hand, deck);
-      deck.currentCard++;
-      
-      player2Hand = dealCard(player2Hand, deck);
-		  deck.currentCard++;
+		// The player gets dealt the first card.
+		player1Hand = dealCard(player1Hand, deck);
+		// increment the position (how many cards deep in the deck)
+		deck.currentCard++;
 
-      dealerHand = dealCard(dealerHand, deck);
-      deck.currentCard++;
+		player2Hand = dealCard(player2Hand, deck);
+		deck.currentCard++;
 
-      player1Hand = dealCard(player1Hand, deck);
-  		deck.currentCard++;
+		player3Hand = dealCard(player3Hand, deck);
+		deck.currentCard++;
 
-      // Check for Player 1 Blackjack
-      if (eval(player1Hand) == 21) {
-        cout << "BLACKJACK!";
-      }
-      else {
-        player2Hand = dealCard(player2Hand, deck);
-        deck.currentCard++;
+		dealerHand = dealCard(dealerHand, deck);
+		// increment the position (how many cards deep in the deck)
+		deck.currentCard++;
 
-        // Check for Player 2 Blackjack
-        if (eval(player2Hand) == 21) {
-          cout << "BLACKJACK!";
-        }
-        else {
-          dealerHand = dealCard(dealerHand, deck);
-          deck.currentCard++;
-
-          // Check for Dealer Blackjack
-          if (eval(dealerHand) == 21) {
-            cout << "BLACKJACK!";
-          }
-        }
-      }
-    }
-    // If there are 3 players and the dealer
-    else if (playernum == 3)
-    {
-      player1Hand = dealCard(player1Hand, deck);
-      deck.currentCard++;
-      
-      player2Hand = dealCard(player2Hand, deck);
-		  deck.currentCard++;
-      
-      player3Hand = dealCard(player3Hand, deck);
-		  deck.currentCard++;
-
-      dealerHand = dealCard(dealerHand, deck);
-      deck.currentCard++;
-
-      player1Hand = dealCard(player1Hand, deck);
-      deck.currentCard++;
-
-      // Check for Player 1 Blackjack
-      if (eval(player1Hand) == 21) {
-        cout << "BLACKJACK!";
-      }
-      else {
-        player2Hand = dealCard(player2Hand, deck);
-        deck.currentCard++;
-
-        // Check for Player 2 Blackjack
-        if (eval(player2Hand) == 21) {
-          cout << "BLACKJACK";
-        }
-        else {
-          player3Hand = dealCard(player3Hand, deck);
-          deck.currentCard++;
-
-          // Check for Player 3 Blackjack
-          if (eval(player3Hand) == 21) {
-            cout << "BLACKJACK!";
-          }
-          else {
-            dealerHand = dealCard(dealerHand, deck);
-            deck.currentCard++;
-
-            // Check for Dealer Blackjack
-            if (eval(dealerHand) == 21) {
-              cout << "BLACKJACK!";
-            }
-          }
-        }
-      }
-    }
-
-    printHand(player1Hand);
-    cout << "Player 1 score: " << eval(player1Hand) << endl << endl;
-    
-    if(playernum>1){
-      printHand(player2Hand);
-      cout << "Player 2 score: " << eval(player2Hand) << endl << endl;
-      if(eval(player2Hand)==21)
-      {
-        printHand(player2Hand);
-        cout << "BLACKJACK!" << endl;
-        if(eval(dealerHand)<21){
-        player2Wins++;
-        }
-      }
-      else{
-        cout << "PUSH" << endl;
-      }
-      if(playernum>2){
-        printHand(player3Hand);
-        cout << "Player 3 score: " << eval(player3Hand) << endl << endl;
-        if(eval(player1Hand)==21)
-        {
-          printHand(player1Hand);
-          cout << "BLACKJACK!" << endl;
-          if(eval(dealerHand)<21){
-            player3Wins++;
-          }
-          else{
-            cout << "PUSH" << endl;
-          }
-        }
-      } 
-    }
-    printDHand(dealerHand);
-    if(eval(player1Hand)==21)
-    {
-      printHand(dealerHand);
-      cout << "BLACKJACK!";
-      if()
-    }
-    cout << endl;
-
-    while(eval(player1Hand)<21){
-      char decision;
-      printHand(player1Hand);
-      cout << "Player 1 score: " << eval(player1Hand) << endl;
-      cout << "Will you hit?(y/n)" << endl;
-      cin >> decision;
-      if(decision == 'y' or decision == 'Y'){
-        player1Hand = dealCard(player1Hand, deck);
-        deck.currentCard++;
-        
-      }
-      else{
         printHand(player1Hand);
         cout << "Player 1 score: " << eval(player1Hand) << endl << endl;
-        break;}
-    }
-
-
-    if(eval(player1Hand)>21)
-    {
-      printHand(player1Hand);
-      cout << "BUST!";
-    }
-    else
-    {
-      printHand(player1Hand);
-      cout << "Player 1 score: " << eval(player1Hand) << endl;
-    }
-
-    if(playernum>1){
-      while(eval(player2Hand)<21 or eval(player1Hand)!=21){
-        char decision;
+        if(eval(player1Hand)==21)
+        {
+        printHand(player1Hand);
+        cout << "BLACKJACK!" << endl;
+        player1Blj = true;
+        if(eval(dealerHand)<21){
+        player1Wins++;
+        }
+        }
+        else{
+        cout << "PUSH" << endl;
+        player1Pushes=true;
+        } 
+        if(playernum>1){
         printHand(player2Hand);
         cout << "Player 2 score: " << eval(player2Hand) << endl << endl;
+        if(eval(player2Hand)==21)
+        {
+            printHand(player2Hand);
+            cout << "BLACKJACK!" << endl;
+            player2Blj = true;
+            if(eval(dealerHand)<21){
+            player2Wins++;
+            }
+        }
+        else{
+            cout << "PUSH" << endl;
+        }
+        if(playernum>2){
+            printHand(player3Hand);
+            cout << "Player 3 score: " << eval(player3Hand) << endl << endl;
+            if(eval(player3Hand)==21)
+            {
+            printHand(player3Hand);
+            cout << "BLACKJACK!" << endl;
+            player3Blj = true;
+            if(eval(dealerHand)<21){
+                player3Wins++;
+            }
+            else{
+                cout << "PUSH" << endl;
+            }
+            }
+        } 
+        }
+        printDHand(dealerHand);
+        if(eval(dealerHand)==21)
+        {
+        printHand(dealerHand);
+        cout << "BLACKJACK!";     
+        dealerBlj=true;
+        if(player1Blj==false or player2Blj==false or player3Blj==false) {
+        dealerWins++;
+        }
+        cout << endl;
+
+        while(eval(player1Hand)<21){
+        char decision;
+        printHand(player1Hand);
+        cout << "Player 1 score: " << eval(player1Hand) << endl;
         cout << "Will you hit?(y/n)" << endl;
         cin >> decision;
         if(decision == 'y' or decision == 'Y'){
-          player2Hand = dealCard(player2Hand, deck);
-          deck.currentCard++;
-          
-        }
-        else{
-          printHand(player2Hand);
-          cout << "Player 2 score: " << eval(player2Hand) << endl;
-          break;}
-      }
-      printHand(player2Hand);
-      cout << "Player 3 score: " << eval(player2Hand) << endl << endl;
-      
-      if(playernum>2){
-        while(eval(player3Hand)<21){
-          char decision;
-          printHand(player3Hand);
-          cout << "Player 3 score: " << eval(player3Hand) << endl;
-          cout << "Will you hit?(y/n)" << endl;
-          cin >> decision;
-          if(decision == 'y' or decision == 'Y'){
-            player3Hand = dealCard(player3Hand, deck);
+            player1Hand = dealCard(player1Hand, deck);
             deck.currentCard++;
             
-          }
-          else{
-            printHand(player3Hand);
-            cout << "Player 3 score: " << eval(player3Hand) << endl << endl;
+        }
+        else{
+            printHand(player1Hand);
+            cout << "Player 1 score: " << eval(player1Hand) << endl << endl;
             break;}
         }
+
+
+        if(eval(player1Hand)>21)
+        {
         printHand(player1Hand);
-        cout << "Player 3 score: " << eval(player3Hand) << endl;
-      }
-    }
-    while(eval(dealerHand)<17){
-      if(playernum>2){
-        while(eval(dealerHand)<eval(player1Hand) or eval(dealerHand)<eval(player2Hand) or eval(dealerHand)<eval(player3Hand)){
-        dealerHand = dealCard(dealerHand, deck);
+        cout << "BUST!";
         }
-      }
-      if(playernum>1){
-        while(eval(dealerHand)<eval(player1Hand) or eval(dealerHand)<eval(player2Hand)){
-        dealerHand = dealCard(dealerHand, deck);
+        else
+        {
+        printHand(player1Hand);
+        cout << "Player 1 score: " << eval(player1Hand) << endl;
         }
-      }
-      else{
-        while(eval(dealerHand)<eval(player1Hand)){
-        dealerHand = dealCard(dealerHand, deck);
+
+        if(playernum>1){
+        while(eval(player2Hand)<21 or eval(player1Hand)!=21){
+            char decision;
+            printHand(player2Hand);
+            cout << "Player 2 score: " << eval(player2Hand) << endl << endl;
+            cout << "Will you hit?(y/n)" << endl;
+            cin >> decision;
+            if(decision == 'y' or decision == 'Y'){
+            player2Hand = dealCard(player2Hand, deck);
+            deck.currentCard++;
+            
+            }
+            else{
+            printHand(player2Hand);
+            cout << "Player 2 score: " << eval(player2Hand) << endl;
+            break;}
         }
-      }
+        printHand(player2Hand);
+        cout << "Player 3 score: " << eval(player2Hand) << endl << endl;
+        
+        if(playernum>2){
+            while(eval(player3Hand)<21){
+            char decision;
+            printHand(player3Hand);
+            cout << "Player 3 score: " << eval(player3Hand) << endl;
+            cout << "Will you hit?(y/n)" << endl;
+            cin >> decision;
+            if(decision == 'y' or decision == 'Y'){
+                player3Hand = dealCard(player3Hand, deck);
+                deck.currentCard++;
+                
+            }
+            else{
+                printHand(player3Hand);
+                cout << "Player 3 score: " << eval(player3Hand) << endl << endl;
+                break;}
+            }
+            printHand(player1Hand);
+            cout << "Player 3 score: " << eval(player3Hand) << endl;
+        }
+        }
+        while(eval(dealerHand)<17){
+        if(playernum>2){
+            while(eval(dealerHand)<eval(player1Hand) or eval(dealerHand)<eval(player2Hand) or eval(dealerHand)<eval(player3Hand)){
+            dealerHand = dealCard(dealerHand, deck);
+            }
+        }
+        if(playernum>1){
+            while(eval(dealerHand)<eval(player1Hand) or eval(dealerHand)<eval(player2Hand)){
+            dealerHand = dealCard(dealerHand, deck);
+            }
+        }
+        else{
+            while(eval(dealerHand)<eval(player1Hand)){
+            dealerHand = dealCard(dealerHand, deck);
+            }
+        }
+        }
+
+        printHand(dealerHand);
+        cout << "Dealer's score: " << eval(dealerHand) << endl << endl;
+
+            // TODO: print out hand of all players
+
+            // print out the dealer's hand, hiding the hole card:
+
+            // subsequent printing will require a function in the case that the dealer hits (on a hand < 16).		
+
+            //cout << "DEBUG In main(): " << player1Hand.owner << "'s hand value: " << eval(player1Hand) << endl;
+            //cout << "DEBUG In main(): " << dealerHand.owner << "'s hand value: " << eval(dealerHand) << endl;
+
+        if(((eval(dealerHand)>eval(player1Hand)) or (eval(dealerHand)>eval(player2Hand)) or (eval(dealerHand)>eval(player3Hand))) and (eval(dealerHand)<21))
+        {
+        dealerWins++;
+        }
+        
+        if((eval(player1Hand)>eval(dealerHand)) or (eval(dealerHand)>21 and eval(player1Hand)<22))
+        {
+        cout << "Player 1 Wins";
+        player1Wins++;
+        }
+        
+        if((eval(player2Hand)>eval(dealerHand) or (eval(dealerHand)>21 and eval(player2Hand)<22)) and playernum>1)
+        {
+        cout << "Player 2 Wins";
+        player2Wins++;
+        }
+
+        if((eval(player3Hand)>eval(dealerHand) or (eval(dealerHand)>21 and eval(player3Hand)<22)) and playernum>2)
+        {
+        cout << "Player 3 Wins";
+        player3Wins++;
+        }
+
+        cout << "Player 1 Wins: " << player1Wins << endl;
+        cout << "Player 2 Wins: " << player2Wins << endl;
+        cout << "Player 3 Wins: " << player3Wins << endl;
+        cout << "Dealer Wins: " << dealerWins << endl;
+
+            char replay;
+            cout << "\n\nPlay again?(y/n)";
+            cin >> replay;
+            if(replay == 'n' or replay == 'N'){break;}
+        }
     }
-
-    printHand(dealerHand);
-    cout << "Dealer's score: " << eval(dealerHand) << endl << endl;
-
-		// TODO: print out hand of all players
-
-		// print out the dealer's hand, hiding the hole card:
-
-		// subsequent printing will require a function in the case that the dealer hits (on a hand < 16).		
-
-		//cout << "DEBUG In main(): " << player1Hand.owner << "'s hand value: " << eval(player1Hand) << endl;
-		//cout << "DEBUG In main(): " << dealerHand.owner << "'s hand value: " << eval(dealerHand) << endl;
-
-    if(((eval(dealerHand)>eval(player1Hand)) or (eval(dealerHand)>eval(player2Hand)) or (eval(dealerHand)>eval(player3Hand))) and (eval(dealerHand)<21))
-    {
-      dealerWins++;
-    }
-    
-    if((eval(player1Hand)>eval(dealerHand)) or (eval(dealerHand)>21 and eval(player1Hand)<22))
-    {
-      cout << "Player 1 Wins";
-      player1Wins++;
-    }
-    
-    if((eval(player2Hand)>eval(dealerHand) or (eval(dealerHand)>21 and eval(player2Hand)<22)) and playernum>1)
-    {
-      cout << "Player 2 Wins";
-      player2Wins++;
-    }
-
-    if((eval(player3Hand)>eval(dealerHand) or (eval(dealerHand)>21 and eval(player3Hand)<22)) and playernum>2)
-    {
-      cout << "Player 3 Wins";
-      player3Wins++;
-    }
-
-    cout << "Player 1 Wins: " << player1Wins << endl;
-    cout << "Player 2 Wins: " << player2Wins << endl;
-    cout << "Player 3 Wins: " << player3Wins << endl;
-    cout << "Dealer Wins: " << dealerWins << endl;
-
-		char replay;
-		cout << "\n\nPlay again?(y/n)";
-		cin >> replay;
-		if(replay == 'n' or replay == 'N'){break;}
-	}
 
   cout << "Player 1 Wins: " << player1Wins << endl;
   cout << "Player 2 Wins: " << player2Wins << endl;
