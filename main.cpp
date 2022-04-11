@@ -206,7 +206,7 @@ int main(){
 	const int NUMCARDS =52;
 	const int CARDSIZE = 2;
 	int playernum;
-	cout << "How many players? (1,2,3)" << endl;
+	cout << "How many players? [1,2,3]" << endl;
 	cin >> playernum;
 
   int player1Wins = 0;
@@ -242,131 +242,67 @@ int main(){
 		}
 		cout << endl;
 
-		// printDeck(deck); // DEBUG: deck validation.
-    deck = shuffle(deck, NUMCARDS);
+		printDeck(deck); // DEBUG: deck validation.
+        deck = shuffle(deck, NUMCARDS);   
+		//NOTDOING: (optional) replace card letters with symbols
+		// Method 2: don't do method 1 above, make the deck in create_deck using the suit symbols
+		// Example:
+		// string suitSymbols[] = {"♣", "♦", "♥", "♠"};
+		// for (auto n : suitSymbols){ // the initializer may be an array
+		// 		cout << n << endl;
+		// }
+		// cout << endl;
 
-    // ==== DEAL HANDS ====
-
-    /*
-    - Noteworthy Items - 
-    Player 1 will always be dealt a full hand
-    Conditionals must be nested within each other because if the first condition is met the game ends
-    and we must break the loop
-    */
+    //int 3
+		// TODO: shuffle the deck
     
-    // If there is only 1 player and the dealer
-    if (playernum == 1) {
-  		player1Hand = dealCard(player1Hand, deck);
-  		deck.currentCard++;
+		// DEBUG:
+		// cout << "Shuffled deck: ", printDeck() << endl;
+		// cout << "first item: " << deck[0] << endl;
 
-      dealerHand = dealCard(dealerHand, deck);
-      deck.currentCard++;
 
-      player1Hand = dealCard(player1Hand, deck);
-  		deck.currentCard++;
+		// TODO: Deal cards out from the deck to make hands
+		
+		// cout << "\nDEBUG: current card: " << deck.currentCard << endl;
 
-      // Check for blackjack
-      if (eval(player1Hand) == 21) {
-        cout << "BLACKJACK!";
-      }
-      else {
-        dealerHand = dealCard(dealerHand, deck);
-        deck.currentCard++;
-        
-        // Check for Dealer Blackjack
-        if (eval(dealerHand) == 21) {
-          cout << "BLACKJACK!";
-        }
-      }
-    }
-    // If there are only 2 players and the dealer
-    else if (playernum == 2)
-    {
-      player1Hand = dealCard(player1Hand, deck);
-      deck.currentCard++;
-      
-      player2Hand = dealCard(player2Hand, deck);
-		  deck.currentCard++;
+		// The player gets dealt the first card.
+		player1Hand = dealCard(player1Hand, deck);
+		// increment the position (how many cards deep in the deck)
+		deck.currentCard++;
 
-      dealerHand = dealCard(dealerHand, deck);
-      deck.currentCard++;
+		player2Hand = dealCard(player2Hand, deck);
+		deck.currentCard++;
 
-      player1Hand = dealCard(player1Hand, deck);
-  		deck.currentCard++;
+		player3Hand = dealCard(player3Hand, deck);
+		deck.currentCard++;
+		// cout << "DEBUG: back in main() from dealCard." << endl;
+		// printHand(player1Hand);
+		// cout << "DEBUG: Current number of cards dealt (deck list index): " << deck.currentCard << endl;
 
-      // Check for Player 1 Blackjack
-      if (eval(player1Hand) == 21) {
-        cout << "BLACKJACK!";
-      }
-      else {
-        player2Hand = dealCard(player2Hand, deck);
-        deck.currentCard++;
+		dealerHand = dealCard(dealerHand, deck);
+		// increment the position (how many cards deep in the deck)
+		deck.currentCard++;
+		// cout << "DEBUG: back in main() from dealCard." << endl;
+		// printHand(dealerHand);
+		// cout << "DEBUG: Current number of cards dealt (deck list index): " << deck.currentCard << endl;
 
-        // Check for Player 2 Blackjack
-        if (eval(player2Hand) == 21) {
-          cout << "BLACKJACK!";
-        }
-        else {
-          dealerHand = dealCard(dealerHand, deck);
-          deck.currentCard++;
+		// The player gets dealt the first card.
+		player1Hand = dealCard(player1Hand, deck);
+		// increment the position (how many cards deep in the deck)
+		deck.currentCard++;
 
-          // Check for Dealer Blackjack
-          if (eval(dealerHand) == 21) {
-            cout << "BLACKJACK!";
-          }
-        }
-      }
-    }
-    // If there are 3 players and the dealer
-    else if (playernum == 3)
-    {
-      player1Hand = dealCard(player1Hand, deck);
-      deck.currentCard++;
-      
-      player2Hand = dealCard(player2Hand, deck);
-		  deck.currentCard++;
-      
-      player3Hand = dealCard(player3Hand, deck);
-		  deck.currentCard++;
+		player2Hand = dealCard(player2Hand, deck);
+		deck.currentCard++;
 
-      dealerHand = dealCard(dealerHand, deck);
-      deck.currentCard++;
+		player3Hand = dealCard(player3Hand, deck);
+		deck.currentCard++;
+		// cout << "DEBUG: back in main() from dealCard." << endl;
+		// printHand(player1Hand);
+		// cout << "DEBUG: Current number of cards dealt (deck list index): " << deck.currentCard << endl;
 
-      player1Hand = dealCard(player1Hand, deck);
-      deck.currentCard++;
-
-      // Check for Player 1 Blackjack
-      if (eval(player1Hand) == 21) {
-        cout << "BLACKJACK!";
-      }
-      else {
-        player2Hand = dealCard(player2Hand, deck);
-        deck.currentCard++;
-
-        // Check for Player 2 Blackjack
-        if (eval(player2Hand) == 21) {
-          cout << "BLACKJACK";
-        }
-        else {
-          player3Hand = dealCard(player3Hand, deck);
-          deck.currentCard++;
-
-          // Check for Player 3 Blackjack
-          if (eval(player3Hand) == 21) {
-            cout << "BLACKJACK!";
-          }
-          else {
-            dealerHand = dealCard(dealerHand, deck);
-            deck.currentCard++;
-
-            // Check for Dealer Blackjack
-            if (eval(dealerHand) == 21) {
-              cout << "BLACKJACK!";
-            }
-          }
-        }
-      }
-    }
+		dealerHand = dealCard(dealerHand, deck);
+		// increment the position (how many cards deep in the deck)
+		deck.currentCard++;
 
     printHand(player1Hand);
     cout << "Player 1 score: " << eval(player1Hand) << endl << endl;
