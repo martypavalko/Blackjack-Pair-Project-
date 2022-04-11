@@ -206,7 +206,7 @@ int main(){
 	const int NUMCARDS =52;
 	const int CARDSIZE = 2;
 	int playernum;
-	cout << "How many players? [1,2,3]" << endl;
+	cout << "How many players? (1,2,3)" << endl;
 	cin >> playernum;
 
   int player1Wins = 0;
@@ -242,10 +242,17 @@ int main(){
 		}
 		cout << endl;
 
-		printDeck(deck); // DEBUG: deck validation.
+		// printDeck(deck); // DEBUG: deck validation.
     deck = shuffle(deck, NUMCARDS);
 
     // ==== DEAL HANDS ====
+
+    /*
+    - Noteworthy Items - 
+    Player 1 will always be dealt a full hand
+    Conditionals must be nested within each other because if the first condition is met the game ends
+    and we must break the loop
+    */
     
     // If there is only 1 player and the dealer
     if (playernum == 1) {
@@ -265,6 +272,11 @@ int main(){
       else {
         dealerHand = dealCard(dealerHand, deck);
         deck.currentCard++;
+        
+        // Check for Dealer Blackjack
+        if (eval(dealerHand) == 21) {
+          cout << "BLACKJACK!";
+        }
       }
     }
     // If there are only 2 players and the dealer
@@ -297,6 +309,11 @@ int main(){
         else {
           dealerHand = dealCard(dealerHand, deck);
           deck.currentCard++;
+
+          // Check for Dealer Blackjack
+          if (eval(dealerHand) == 21) {
+            cout << "BLACKJACK!";
+          }
         }
       }
     }
@@ -334,12 +351,18 @@ int main(){
           player3Hand = dealCard(player3Hand, deck);
           deck.currentCard++;
 
+          // Check for Player 3 Blackjack
           if (eval(player3Hand) == 21) {
             cout << "BLACKJACK!";
           }
           else {
             dealerHand = dealCard(dealerHand, deck);
             deck.currentCard++;
+
+            // Check for Dealer Blackjack
+            if (eval(dealerHand) == 21) {
+              cout << "BLACKJACK!";
+            }
           }
         }
       }
