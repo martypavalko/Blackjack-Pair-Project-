@@ -277,7 +277,19 @@ int main(){
 
     printHand(player1Hand);
     cout << "Player 1 score: " << eval(player1Hand) << endl << endl;
-    
+    if(eval(player1Hand)==21)
+    {
+      printHand(player1Hand);
+      cout << "BLACKJACK!" << endl;
+      player1Blj = true;
+      if(eval(dealerHand)<21){
+      player1Wins++;
+      }
+    }
+    else{
+      cout << "PUSH" << endl;
+      player1Pushes=true;
+    } 
     if(playernum>1){
       printHand(player2Hand);
       cout << "Player 2 score: " << eval(player2Hand) << endl << endl;
@@ -285,6 +297,7 @@ int main(){
       {
         printHand(player2Hand);
         cout << "BLACKJACK!" << endl;
+        player2Blj = true
         if(eval(dealerHand)<21){
         player2Wins++;
         }
@@ -295,10 +308,11 @@ int main(){
       if(playernum>2){
         printHand(player3Hand);
         cout << "Player 3 score: " << eval(player3Hand) << endl << endl;
-        if(eval(player1Hand)==21)
+        if(eval(player3Hand)==21)
         {
-          printHand(player1Hand);
+          printHand(player3Hand);
           cout << "BLACKJACK!" << endl;
+          player3Blj = true;
           if(eval(dealerHand)<21){
             player3Wins++;
           }
@@ -309,15 +323,17 @@ int main(){
       } 
     }
     printDHand(dealerHand);
-    if(eval(player1Hand)==21)
+    if(eval(dealerHand)==21)
     {
       printHand(dealerHand);
-      cout << "BLACKJACK!";
-      if()
+      cout << "BLACKJACK!";     
+      dealerHandBlj=true;
+      if(player1Blj=false or player2Blj=false or player3Blj=false) {
+      dealerWins++;
     }
     cout << endl;
 
-    while(eval(player1Hand)<21){
+    while(eval(player1Hand)<21 and ){
       char decision;
       printHand(player1Hand);
       cout << "Player 1 score: " << eval(player1Hand) << endl;

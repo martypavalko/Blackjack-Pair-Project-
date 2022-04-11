@@ -242,93 +242,38 @@ int main(){
 		}
 		cout << endl;
 
-		printDeck(deck); // DEBUG: deck validation.
-    deck = shuffle(deck, NUMCARDS);
+		// printDeck(deck); // DEBUG: deck validation.
+    deck = shuffle(deck, NUMCARDS);   
 
-    // ==== DEAL HANDS ====
-    
-    // If there is only 1 player and the dealer
-    if (playernum == 1) {
-  		player1Hand = dealCard(player1Hand, deck);
-  		deck.currentCard++;
+		// The player gets dealt the first card.
+		player1Hand = dealCard(player1Hand, deck);
+		// increment the position (how many cards deep in the deck)
+		deck.currentCard++;
 
-      dealerHand = dealCard(dealerHand, deck);
-      deck.currentCard++;
+		player2Hand = dealCard(player2Hand, deck);
+		deck.currentCard++;
 
-      player1Hand = dealCard(player1Hand, deck);
-  		deck.currentCard++;
+		player3Hand = dealCard(player3Hand, deck);
+		deck.currentCard++;
 
-      // Check for blackjack
-      if (eval(player1Hand) == 21) {
-        cout << "BLACKJACK!";
-      }
-      else {
-        dealerHand = dealCard(dealerHand, deck);
-        deck.currentCard++;
-      }
-    }
-    // If there are only 2 players and the dealer
-    else if (playernum == 2)
-    {
-      player1Hand = dealCard(player1Hand, deck);
-      deck.currentCard++;
-      
-      player2Hand = dealCard(player2Hand, deck);
-		  deck.currentCard++;
+		dealerHand = dealCard(dealerHand, deck);
+		// increment the position (how many cards deep in the deck)
+		deck.currentCard++;
 
-      dealerHand = dealCard(dealerHand, deck);
-      deck.currentCard++;
+		// The player gets dealt the first card.
+		player1Hand = dealCard(player1Hand, deck);
+		// increment the position (how many cards deep in the deck)
+		deck.currentCard++;
 
-      player1Hand = dealCard(player1Hand, deck);
-  		deck.currentCard++;
+		player2Hand = dealCard(player2Hand, deck);
+		deck.currentCard++;
 
-      // Check for Player 1 Blackjack
-      if (eval(player1Hand) == 21) {
-        cout << "BLACKJACK!";
-      }
-      else {
-        player2Hand = dealCard(player2Hand, deck);
-        deck.currentCard++;
+		player3Hand = dealCard(player3Hand, deck);
+		deck.currentCard++;
 
-        // Check for Player 2 Blackjack
-        if (eval(player2Hand) == 21) {
-          cout << "BLACKJACK!";
-        }
-        else {
-          dealerHand = dealCard(dealerHand, deck);
-          deck.currentCard++;
-        }
-      }
-    }
-    // If there are 3 players and the dealer
-    else if (playernum == 3)
-    {
-      player1Hand = dealCard(player1Hand, deck);
-      deck.currentCard++;
-      
-      player2Hand = dealCard(player2Hand, deck);
-		  deck.currentCard++;
-      
-      player3Hand = dealCard(player3Hand, deck);
-		  deck.currentCard++;
-
-      dealerHand = dealCard(dealerHand, deck);
-      deck.currentCard++;
-
-      player1Hand = dealCard(player1Hand, deck);
-      deck.currentCard++;
-
-      // Check for Player 1 Blackjack
-      if (eval(player1Hand) == 21) {
-        cout << "BLACKJACK!";
-      }
-      else {
-        player2Hand = dealCard(player2Hand, deck);
-        deck.currentCard++;
-
-        if ()
-      }
-    }
+		dealerHand = dealCard(dealerHand, deck);
+		// increment the position (how many cards deep in the deck)
+		deck.currentCard++;
 
     printHand(player1Hand);
     cout << "Player 1 score: " << eval(player1Hand) << endl << endl;
@@ -338,11 +283,10 @@ int main(){
       cout << "Player 2 score: " << eval(player2Hand) << endl << endl;
       if(eval(player2Hand)==21)
       {
-        player2Blj = true;
         printHand(player2Hand);
         cout << "BLACKJACK!" << endl;
         if(eval(dealerHand)<21){
-          player2Wins++;          
+        player2Wins++;
         }
       }
       else{
